@@ -1,35 +1,38 @@
-//Put all state here
 const initState = {
   popular: [],
   newGames: [],
   upcoming: [],
+  searched: [],
 };
 
 const gamesReducer = (state = initState, action) => {
   switch (action.type) {
     case "FETCH_GAMES":
-      return { ...state, ...action.payload };
+      return {
+        ...state,
+        popular: action.payload.popular,
+        upcoming: action.payload.upcoming,
+        newGames: action.payload.newGames,
+      };
     default:
       return { ...state };
   }
 };
 
 //*ACTION
-
 // {
 //   type: "FETCH_GAMES";
 // }
 
-// dispatch({type: "FETCH_GAMES"})
+// dispatch({ type: "FETCH_GAMES" });
 
-//*ACTION CREATOR
-// const fetchGames = (userData) => {
+//*ACTION CREATOR a function that return an action
+// const fetchGames = userData => {
 //   return {
 //     type: "FETCH_GAMES",
-//   payload: userData
+//     //To send additional data
+//     payload: userData,
 //   };
 // };
-
-// fetchGames();
 
 export default gamesReducer;

@@ -1,21 +1,23 @@
 import React from "react";
 import ReactDOM from "react-dom";
-
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-//REDUX SETUP
-import { createStore } from "redux";
-import rootReducer from "./reducers";
-import { Provider } from "react-redux";
-import thunk from "redux-thunk";
 
-//We can create more than one reducer but
-//we need a root with a combiner because //*createStore
-//can only listen one reducer
+//REDUX SETUP
+import { createStore, applyMiddleware, compose } from "redux";
+import rootReducer from "./reducers";
+import thunk from "redux-thunk";
+import { Provider } from "react-redux";
+
+const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+//*CreatorStore only allows the reducer and the dev tools
 const store = createStore(
   rootReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  thunk
+
+  //*applying thunk to async operations
+  //we use applyMiddleware to use thunk as middleware
+  composeEnhancer(applyMiddleware(thunk))
 );
 
 ReactDOM.render(
